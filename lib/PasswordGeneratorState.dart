@@ -15,14 +15,23 @@ class PasswordGeneratorState extends State<PasswordGenerator> {
   void generatePassword() {
     final random = Random.secure();
     int length = int.tryParse(lengthController.text) ?? 12;
-
+    if (length < 6 || length > 15) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+              'Enter length between 6 and 15!'),
+        ),
+      );
+      return;
+    }
     String charset = '';
+
     if(!includeLowercase && !includeUppercase &&
         !includeNumbers && !includeSymbols){
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-              'Choose some options to create your password!'),
+              'Choose some criteria to create your password!'),
         ),
       );
     }
